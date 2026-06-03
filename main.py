@@ -1,4 +1,5 @@
 import streamlit as st
+from app.planner import generate_trip
 
 st.set_page_config(
     page_title="TripGenie",
@@ -96,16 +97,30 @@ interests = st.multiselect(
 
 if st.button("Generate Trip"):
 
-    st.success("Trip Details Generated")
+    if not from_location or not destination:
+        st.warning("Please enter both From Location and Destination.")
+        st.stop()
 
-    st.markdown("## Trip Summary")
+    if not interests:
+        st.warning("Please select at least one interest.")
+        st.stop()
 
-    st.write(f"From: {from_location}")
-    st.write(f"To: {destination}")
-    st.write(f"Duration: {duration} Days")
-    st.write(f"Travelers: {travelers}")
-    st.write(f"Travel Type: {travel_type}")
-    st.write(f"Budget: ₹{budget:,}")
-    st.write(f"Transport: {transport}")
-    st.write(f"Accommodation: {accommodation}")
-    st.write(f"Interests: {', '.join(interests)}")
+    with st.spinner("Planning your trip..."):
+
+        result = generate_trip(
+            from_location=from_location,
+            destination=destination,
+            duration=duration,
+            travelers=travelers,
+            travel_type=travel_type,
+            budget=budget,
+            transport=transport,
+            accommodation=accommodation,
+            interests=interests
+        )
+
+    st.success("Trip Plan Generated")
+
+    st.markdown("## Your AI Generated Itinerary")
+
+    st.markdown(result)
