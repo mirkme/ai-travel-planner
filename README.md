@@ -25,8 +25,7 @@ TripGenie is an AI-powered travel planning web app built with [Streamlit](https:
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/tripgenie.git
-cd tripgenie
+git clone https://github.com/mirkme/ai-travel-planner)
 ```
 
 ### 2. Create and activate a virtual environment
